@@ -217,10 +217,37 @@ public class FormularioGimnasioTestController_1 implements Initializable {
 		listaClientes.add(nuevoCliente);
 
 
-
-
 	}
 
+	/**
+	 * Asociado al botón Actualizar para editar datos de un cliente
+	 */
+	@FXML
+	public void actualizarCliente(){
+		//Creamos un objeto de tipo Conexion para conectar a la DB
+		Conexion conexion = new Conexion();
+		//Conecatmos a la DB
+		conexion.establecerConexion();
+
+		//Creamos una instancia del tipo Cliente Avanzado II
+		Cliente nuevoCliente = new Cliente(
+				txtNombre.getText(),
+				Integer.valueOf(txtCedula.getText()),
+				Date.valueOf(datePkrFecha_Nacimiento.getValue()),
+				txtDireccion.getText(),
+				Integer.valueOf(txtTelefono.getText()),
+				txtCorreo.getText(),
+				generoSeleccionado(),
+				txtAreaObservaciones.getText());
+
+		nuevoCliente.actualizarRegistro(conexion.getConexion());
+		//Cerramos la conexion
+		conexion.cerrarConexion();
+
+		//Agrego a la tabla la edición del cliente
+		listaClientes.set(tblViewCliente.getSelectionModel().getSelectedIndex(),nuevoCliente);
+		
+	}
 
 	public String generoSeleccionado(){
 

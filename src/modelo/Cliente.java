@@ -343,6 +343,47 @@ public class Cliente {
 		}
 	}
 
+
+
+
+	/**
+	 * Actualizar registros o clientes nuevos en la DB dinámicamente
+	 * o sea con consulta parametrizada
+	 * @param conexion
+	 */
+	public  void actualizarRegistro(Connection conexion){
+
+		try {
+			//Genero la consulta parametrizada como argumento de un objeto PreparedStatement
+			PreparedStatement instruccion =
+					conexion.prepareStatement("update cliente set "
+							+ "nombre = ?, "
+							+ "cedula = ?, "
+							+ "fecha_nacimiento = ?, "
+							+ "direccion = ?, "
+							+ "telefono = ?, "
+							+ "correo = ?, "
+							+ "genero = ?, "
+							+ "observaciones = ? where cedula = ?");
+
+			//Definimos los parametros
+			instruccion.setString(1,nombre.get());
+			instruccion.setInt(2, cedula.get());
+			instruccion.setDate(3, fecha_nacimiento.get());
+			instruccion.setString(4, direccion.get());
+			instruccion.setInt(5, telefono.get());
+			instruccion.setString(6, correo.get());
+			instruccion.setString(7, genero.get());
+			instruccion.setString(8, observaciones.get());
+			instruccion.setInt(9, cedula.get());
+
+			//Ejecutas la consulta
+			instruccion.executeUpdate();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+	}
+
 	/**
 	 * Método sobrescrito para mostrar toda la info del objeto cliente
 	 */
