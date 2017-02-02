@@ -11,6 +11,8 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.scene.control.Alert;
+import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.DatePicker;
 import javafx.scene.control.RadioButton;
@@ -19,6 +21,7 @@ import javafx.scene.control.TableView;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
 import javafx.scene.control.ToggleGroup;
+import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.cell.PropertyValueFactory;
 import modelo.Cliente;
 import modelo.Conexion;
@@ -48,6 +51,12 @@ public class FormularioGimnasioTestController_1 implements Initializable {
 	@FXML private ToggleGroup tglGroupGenero;
 	@FXML private RadioButton rdoBtmFemenino;
 	@FXML private RadioButton rdoBtmMasculino;
+
+	@FXML private Button btnNuevo;
+	@FXML private Button btnGuardar;
+	@FXML private Button btnEditar;
+	@FXML private Button btnBorrar;
+
 
 
 
@@ -136,13 +145,97 @@ public class FormularioGimnasioTestController_1 implements Initializable {
 							rdoBtmMasculino.setSelected(false);
 						}
 
-
-
+						//Activa los botones guardar y borrar cada vez que selecciona un registro
+						btnEditar.setDisable(false);
+						btnBorrar.setDisable(false);
+						btnGuardar.setDisable(true);
 
 					}
+				});
 
-				}
-	);
 	}
+
+	/**
+	 * Asociado al botón Nuevo para limpiar los textField
+	 */
+	@FXML
+	public void limpiarComponentes(){
+
+		txtNombre.setText(null);
+		txtCedula.setText(null);
+		txtDireccion.setText(null);
+		txtTelefono.setText(null);
+		txtCorreo.setText(null);
+	    txtAreaObservaciones.setText(null);
+		datePkrFecha_Nacimiento.setValue(null);
+		rdoBtmFemenino.setSelected(false);
+		rdoBtmMasculino.setSelected(false);
+
+		btnEditar.setDisable(true);
+		btnBorrar.setDisable(true);
+		btnGuardar.setDisable(false);
+
+
+	}
+
+
+	/**
+	 * Asociado al botón Guardar para guardar datos de un cliente
+	 */
+	@FXML
+	public void guardarCliente(){
+		//Creamos un objeto de tipo Conexion para conectar a la DB
+		Conexion conexion = new Conexion();
+		//Conecatmos a la DB
+		conexion.establecerConexion();
+		//Cliente.guardarRegistro(conexion.getConexion());
+
+		//Creamos una instancia del tipo Cliente Avanzado II
+		Cliente nuevoCliente = new Cliente(
+				txtNombre.getText(),
+				Integer.valueOf(txtCedula.getText()),
+				Date.valueOf(datePkrFecha_Nacimiento.getValue()),
+				txtDireccion.getText(),
+				Integer.valueOf(txtTelefono.getText()),
+				txtCorreo.getText(),
+				generoSeleccionado(),
+				txtAreaObservaciones.getText());
+
+		//Llamamos al método guardarCliente
+		nuevoCliente.guardarRegistro(conexion.getConexion());
+
+		//Cerramos la conexion
+		conexion.cerrarConexion();
+
+		//Mensaje de alerta par indicar que el registro fue guardado
+		Alert info = new Alert(AlertType.CONFIRMATION);
+		info.setTitle("Alerta de Registros");
+		info.setContentText("El registro ha sido agregado");
+
+		//Una vez fue guardado se agrega ese registro a la lista de Clientes
+		//Para que lo muestre en la tabla
+		listaClientes.add(nuevoCliente);
+
+
+
+
+	}
+
+
+	public String generoSeleccionado(){
+
+		String seleccion = null;
+
+		if (rdoBtmFemenino.isSelected() == true){
+			seleccion = "F";
+
+		} else if (rdoBtmMasculino.isSelected() == true){
+			seleccion = "M";
+		}
+
+		return seleccion;
+
+	}
+
 
 }

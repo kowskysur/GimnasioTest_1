@@ -159,11 +159,12 @@
                                     </TextArea>
                                  </children>
                               </GridPane>
-                              <HBox alignment="TOP_CENTER" layoutX="151.0" layoutY="612.0" prefHeight="26.0" prefWidth="253.0" spacing="5.0">
+                              <HBox alignment="TOP_CENTER" layoutX="93.0" layoutY="609.0" prefHeight="26.0" prefWidth="307.0" spacing="5.0">
                                  <children>
-                                    <Button mnemonicParsing="false" text="Guardar" />
-                                    <Button mnemonicParsing="false" prefHeight="26.0" prefWidth="73.0" text="Editar" />
-                                    <Button mnemonicParsing="false" prefHeight="26.0" prefWidth="70.0" text="Borrar" />
+                                    <Button fx:id="btnNuevo" mnemonicParsing="false" onAction="#limpiarComponentes" prefHeight="26.0" prefWidth="67.0" text="Nuevo" />
+                                    <Button fx:id="btnGuardar" mnemonicParsing="false" onAction="#guardarCliente" text="Guardar" />
+                                    <Button fx:id="btnEditar" disable="true" mnemonicParsing="false" prefHeight="26.0" prefWidth="73.0" text="Editar" />
+                                    <Button fx:id="btnBorrar" disable="true" mnemonicParsing="false" prefHeight="26.0" prefWidth="70.0" text="Borrar" />
                                  </children>
                               </HBox>
                            </children>

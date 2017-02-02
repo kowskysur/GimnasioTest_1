@@ -2,6 +2,7 @@ package modelo;
 
 import java.sql.Connection;
 import java.sql.Date;
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
@@ -46,9 +47,9 @@ public class Cliente {
 	 * @param nombre
 	 * @param cedula
 	 */
-	public Cliente(Integer id, String nombre, Integer cedula) {
+	public Cliente(String nombre, Integer cedula) {
 		super();
-		this.id = new SimpleIntegerProperty(id);
+		//this.id = new SimpleIntegerProperty(id);
 		this.nombre = new SimpleStringProperty(nombre);
 		this.cedula = new SimpleIntegerProperty(cedula);
 	}
@@ -72,12 +73,40 @@ public class Cliente {
 		this.id = new SimpleIntegerProperty(id);
 		this.nombre = new SimpleStringProperty(nombre);
 		this.cedula = new SimpleIntegerProperty(cedula);
+		this.fecha_nacimiento = new SimpleObjectProperty(fecha_nacimiento);
 		this.direccion = new SimpleStringProperty(direccion);
 		this.telefono = new SimpleIntegerProperty(telefono);
 		this.correo = new SimpleStringProperty(correo);
 		this.genero = new SimpleStringProperty(genero);
 		this.observaciones = new SimpleStringProperty(observaciones);
+
+	}
+
+	/**
+	 * Constructor del Cliente Avanzado Sin ID II
+	 * @param id
+	 * @param nombre
+	 * @param cedula
+	 * @param dirección
+	 * @param telefono
+	 * @param correo
+	 * @param genero
+	 * @param observaciones
+	 * @param fecha_nacimiento
+	 */
+	public Cliente(String nombre, Integer cedula, Date fecha_nacimiento,
+			String direccion, Integer telefono, String correo, String genero,
+			String observaciones) {
+		super();
+		this.nombre = new SimpleStringProperty(nombre);
+		this.cedula = new SimpleIntegerProperty(cedula);
 		this.fecha_nacimiento = new SimpleObjectProperty(fecha_nacimiento);
+		this.direccion = new SimpleStringProperty(direccion);
+		this.telefono = new SimpleIntegerProperty(telefono);
+		this.correo = new SimpleStringProperty(correo);
+		this.genero = new SimpleStringProperty(genero);
+		this.observaciones = new SimpleStringProperty(observaciones);
+
 	}
 
 	/**
@@ -279,6 +308,42 @@ public class Cliente {
 	}
 
 	/**
+	 * Insertar registros o clientes nuevos en la DB dinámicamente
+	 * o sea con consulta parametrizada
+	 * @param conexion
+	 */
+	public  void guardarRegistro(Connection conexion){
+
+		try {
+			//Genero la consulta parametrizada como argumento de un objeto PreparedStatement
+			PreparedStatement instruccion = conexion.prepareStatement("insert into cliente"
+					+ "(nombre,"
+					+ "cedula,"
+					+ "fecha_nacimiento, "
+					+ "direccion, "
+					+ "telefono, "
+					+ "correo, "
+					+ "genero, "
+					+ "observaciones) value(?,?,?,?,?,?,?,?)");
+
+			//Definimos los parametros
+			instruccion.setString(1,nombre.get());
+			instruccion.setInt(2, cedula.get());
+			instruccion.setDate(3, fecha_nacimiento.get());
+			instruccion.setString(4, direccion.get());
+			instruccion.setInt(5, telefono.get());
+			instruccion.setString(6, correo.get());
+			instruccion.setString(7, genero.get());
+			instruccion.setString(8, observaciones.get());
+
+			//Ejecutas la consulta
+			instruccion.executeUpdate();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+	}
+
+	/**
 	 * Método sobrescrito para mostrar toda la info del objeto cliente
 	 */
 	@Override
@@ -288,6 +353,8 @@ public class Cliente {
 		+ correo.get() + genero.get() + "-" + observaciones.get();
 		return clienteString;
 	}
+
+
 }
 
 
