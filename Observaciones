@@ -1,0 +1,12 @@
+Se inicia desarrollando los métodos CRUD con javaFx-Eclipse
+
+-Existen errores relacionados con la actualización y eliminación de un cliente a partir de su número de cédula q no está definido como
+un campo único, por tanto, puede repetirse.
+
+-Existen errores al definir ciertos campos como no nulos. El problema es al realizar las sentencias sql para
+guardar/actualizar/eliminar un registro, ya que estas consultas reciben como parámetro una instancia de un cliente nuevo
+usando el constructor que solicita todos los campos excepto el de la foto, por tanto  para ingresar un cliente desde la interfaz
+es necesario llenar todos los atributos del cliente. Hay q solucionarlo definiendo el tipo de constructor q se usa o agregando
+condicionales...
+
+-Falta agregar el campo de la foto ya que las consultas sql ni los constructores de cliente la contemplan
