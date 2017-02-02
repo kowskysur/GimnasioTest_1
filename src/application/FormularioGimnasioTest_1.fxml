@@ -164,7 +164,7 @@
                                     <Button fx:id="btnNuevo" mnemonicParsing="false" onAction="#limpiarComponentes" prefHeight="26.0" prefWidth="67.0" text="Nuevo" />
                                     <Button fx:id="btnGuardar" mnemonicParsing="false" onAction="#guardarCliente" text="Guardar" />
                                     <Button fx:id="btnEditar" disable="true" mnemonicParsing="false" onAction="#actualizarCliente" prefHeight="26.0" prefWidth="73.0" text="Actualizar" />
-                                    <Button fx:id="btnBorrar" disable="true" mnemonicParsing="false" prefHeight="26.0" prefWidth="70.0" text="Borrar" />
+                                    <Button fx:id="btnBorrar" disable="true" mnemonicParsing="false" onAction="#eliminarCliente" prefHeight="26.0" prefWidth="70.0" text="Borrar" />
                                  </children>
                               </HBox>
                            </children>

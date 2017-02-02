@@ -385,6 +385,29 @@ public class Cliente {
 	}
 
 	/**
+	 * Eliminar una instancia de tipo Cliente de la DB
+	 * @param conexion
+	 */
+	public  void eliminarRegistro(Connection conexion){
+
+		try {
+
+			//Realizo la consulta parametrizada Sql para eliminar registro
+			PreparedStatement instruccion = conexion.prepareStatement(
+					"delete from cliente where cedula = ?");
+
+			//Defino los parámetros de la consulta
+			instruccion.setInt(1, cedula.get());
+			//Ejecuto la consulta
+			instruccion.executeUpdate();
+
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+	}
+
+
+	/**
 	 * Método sobrescrito para mostrar toda la info del objeto cliente
 	 */
 	@Override

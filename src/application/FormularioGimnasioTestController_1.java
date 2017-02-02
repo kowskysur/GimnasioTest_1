@@ -246,7 +246,29 @@ public class FormularioGimnasioTestController_1 implements Initializable {
 
 		//Agrego a la tabla la edición del cliente
 		listaClientes.set(tblViewCliente.getSelectionModel().getSelectedIndex(),nuevoCliente);
-		
+
+	}
+
+	/**
+	 * Asociado al botón Borrar para borrar datos de un cliente
+	 */
+	@FXML
+	public void eliminarCliente(){
+
+		//Creamos un objeto de tipo Conexion para conectar a la DB
+		Conexion conexion = new Conexion();
+		//Conecatmos a la DB
+		conexion.establecerConexion();
+
+		//Obtenemos el Cliente seleccionado con el método asociado a la tabla
+		Cliente nuevoCliente = tblViewCliente.getSelectionModel().getSelectedItem();
+		nuevoCliente.eliminarRegistro(conexion.getConexion());
+
+		//Cerramos la conexion
+		conexion.cerrarConexion();
+
+		//Elimina el registro del Cliente seleccionado
+		listaClientes.remove(tblViewCliente.getSelectionModel().getSelectedIndex());
 	}
 
 	public String generoSeleccionado(){
