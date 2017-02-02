@@ -10,3 +10,5 @@ es necesario llenar todos los atributos del cliente. Hay q solucionarlo definien
 condicionales...
 
 -Falta agregar el campo de la foto ya que las consultas sql ni los constructores de cliente la contemplan
+
+-No está incluido el script para conectar a la base de datos
